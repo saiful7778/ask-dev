@@ -80,6 +80,9 @@ const authOptions: AuthOptions = {
   },
   debug: process.env.NODE_ENV !== "production",
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    newUser: "/register",
+  },
   session: {
     strategy: "jwt",
     maxAge: 5 * 60 * 60,
