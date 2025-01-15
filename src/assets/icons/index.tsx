@@ -34,4 +34,5 @@ export const NotificationIcon1: React.FC<SVGProps> = ({ ...props }) => (
   </svg>
 );
 
+export * from "./HeartIcon";
 export * from "./SearchIcon";

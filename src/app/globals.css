@@ -37,15 +37,15 @@ body {
   .dark {
     --background: 208 18% 14%;
     --foreground: 0 0% 97%;
-    --card: 210 16% 18%;
+    --card: 208 16% 21%;
     --card-foreground: 0 0% 97%;
-    --popover: 210 16% 18%;
+    --popover: 208 16% 21%;
     --popover-foreground: 0 0% 97%;
     --primary: 16 100% 60%;
     --primary-foreground: 0 0% 97%;
-    --secondary: 208 16% 21%;
+    --secondary: 210 16% 18%;
     --secondary-foreground: 0 0% 97%;
-    --muted: 208 16% 21%;
+    --muted: 210 16% 18%;
     --muted-foreground: 220 40% 84%;
     --accent: 16 100% 60%;
     --accent-foreground: 0 0% 97%;

@@ -6,7 +6,7 @@ const PublicLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div>
       <Topbar />
-      <main className="container mx-auto mt-14 p-2">{children}</main>
+      <main className="container mx-auto mt-14 p-5">{children}</main>
     </div>
   );
 };

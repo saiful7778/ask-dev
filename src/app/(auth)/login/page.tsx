@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <SiteLogo className="ml-auto" />
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs space-y-4">
+          <div className="w-full max-w-sm space-y-4">
             <div className="space-y-2 text-center">
               <h1 className="text-2xl font-bold">Login your account</h1>
               <p className="text-balance text-sm text-muted-foreground">
