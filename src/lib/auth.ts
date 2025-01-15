@@ -1,9 +1,13 @@
-import type { AuthOptions, JWT, User } from "next-auth";
+import type { AuthOptions, User } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import db from "./db";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { loginSchema } from "./schemas/authSchema";
+import { getUserByEmail } from "./utils/getUser";
+import { compare } from "bcrypt";
 
 const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
@@ -29,41 +33,71 @@ const authOptions: AuthOptions = {
       async authorize(
         credentials: Record<"email" | "password", string> | undefined,
       ): Promise<User | null> {
-        const user = {
-          id: "1",
-          name: "J Smith",
-          email: "jsmith@example.com",
-          role: "user",
-          access: false,
-        };
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            return null;
+          }
+          const isValid = loginSchema.safeParse(credentials);
 
-        if (user) {
-          return user as User;
-        } else {
+          if (!isValid.success) return null;
+
+          const { email, password } = isValid.data;
+
+          const userData = await getUserByEmail(email);
+
+          if (
+            !userData ||
+            !userData?.hashedPassword ||
+            !userData.access ||
+            !userData?.emailVerified
+          )
+            return null;
+
+          const isPasswordValid = await compare(
+            password,
+            userData.hashedPassword,
+          );
+
+          if (!isPasswordValid) return null;
+
+          return {
+            id: userData.id.toString(),
+            authProvider: "Credentials",
+            name: userData.name,
+            image: userData.image,
+            email: userData.email,
+            role: userData.role,
+            access: userData.access,
+          };
+        } catch {
           return null;
         }
       },
     }),
   ],
   callbacks: {
-    async session({ token, session }) {
-      session.user.id = token.id as JWT["id"];
-      session.user.role = token.role as JWT["role"];
-      session.user.access = token.access as JWT["access"];
-      session.user.authProvider = token.authProvider as JWT["authProvider"];
-
-      return session;
-    },
     async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
+        token.id = user.id.toString();
         token.role = user.role;
         token.access = user.access;
         if (account) {
-          token.authProvider = account?.provider;
+          token.authProvider = account?.provider as JWT["authProvider"];
         }
+        token.test = "Test code from jwt";
       }
       return token;
+    },
+    async session({ token, session }) {
+      if (token) {
+        session.user.id = token.id as JWT["id"];
+        session.user.role = token.role as JWT["role"];
+        session.user.access = token.access as JWT["access"];
+        session.user.authProvider = token.authProvider as JWT["authProvider"];
+        session.user.test = "Test code from session";
+      }
+
+      return session;
     },
   },
   events: {
@@ -82,6 +116,9 @@ const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     newUser: "/register",
+    signIn: "/login",
+    error: "/login",
+    verifyRequest: "/verify",
   },
   session: {
     strategy: "jwt",

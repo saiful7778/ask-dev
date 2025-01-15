@@ -1,8 +1,8 @@
 import type { NextResponse } from "next/server";
-import serverResponse from "@/lib/utils/serverResponse";
+import serverResponse from "@/lib/helpers/serverResponse";
 import type { ServerResponseType } from "@/types";
 import { ZodError } from "zod";
-import validationErrors from "./validationErrors";
+import validationErrors from "../utils/validationErrors";
 
 export default async function serverAsyncResolve<T>(
   asyncCallback: () => Promise<NextResponse<ServerResponseType<T>>>,
@@ -18,11 +18,21 @@ export default async function serverAsyncResolve<T>(
       });
     }
     if (err instanceof Error) {
-      return serverResponse({
-        success: false,
-        error: err.message,
-        status: 500,
-      });
+      switch (err.name) {
+        case "BodyError":
+          return serverResponse({
+            success: false,
+            error: err.message,
+            status: 400,
+          });
+
+        default:
+          return serverResponse({
+            success: false,
+            error: err.message,
+            status: 500,
+          });
+      }
     }
     return serverResponse({
       success: false,

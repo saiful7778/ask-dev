@@ -16,7 +16,9 @@ declare module "next-auth" {
     access: boolean;
     authProvider: "Credentials" | "Google" | "Github";
   }
+}
 
+declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     role: "user" | "superAdmin";

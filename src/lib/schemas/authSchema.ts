@@ -32,5 +32,18 @@ export const loginSchema = z.object({
     .regex(/\d/, "Password must contain at least one number"),
 });
 
+export const tokenSchema = z.object({
+  token: z
+    .string({ required_error: "Token is required" })
+    .min(1, "Token is required"),
+});
+
+export const sendTokenSchema = z.object({
+  email: z
+    .string({ required_error: "Email address is required" })
+    .email({ message: "Email address is required" })
+    .max(80, "Email address is too long"),
+});
+
 export type registerSchemaType = z.infer<typeof registerSchema>;
 export type loginSchemaType = z.infer<typeof loginSchema>;

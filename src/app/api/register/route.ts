@@ -1,10 +1,11 @@
 import db from "@/lib/db";
 import { registerSchema } from "@/lib/schemas/authSchema";
-import { getJsonBodyData, sendBodyError } from "@/lib/utils/getBodyData";
+import { getJsonBodyData } from "@/lib/helpers/getBodyData";
 import { getUserByEmail } from "@/lib/utils/getUser";
-import serverAsyncResolve from "@/lib/utils/serverAsyncResolve";
-import serverResponse from "@/lib/utils/serverResponse";
+import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
+import serverResponse from "@/lib/helpers/serverResponse";
 import { genSalt, hash } from "bcrypt";
+import sendVerifyToken from "@/lib/helpers/sendVerifyToken";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
@@ -13,10 +14,6 @@ export async function POST(req: Request) {
       email: string;
       password: string;
     }>(req);
-
-    if (!body) {
-      return sendBodyError();
-    }
 
     const { email, fullName, password } = registerSchema.parse(body);
 
@@ -40,6 +37,8 @@ export async function POST(req: Request) {
         hashedPassword: hashedPassword,
       },
     });
+
+    await sendVerifyToken(user);
 
     return serverResponse<typeof user>({
       success: true,

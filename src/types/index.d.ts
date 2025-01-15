@@ -30,7 +30,13 @@ export type UserType = {
   emailVerified: Date | null;
   access: boolean;
   hashedPassword: string | null;
-  saltValue: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ServerComponentParameters<TParams, TSearchParams> = {
+  params: Promise<TParams>;
+  searchParams: Promise<TSearchParams>;
+};
+
+type SVGProps = React.SVGProps<SVGSVGElement>;
