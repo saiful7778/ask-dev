@@ -84,7 +84,6 @@ const authOptions: AuthOptions = {
         if (account) {
           token.authProvider = account?.provider as JWT["authProvider"];
         }
-        token.test = "Test code from jwt";
       }
       return token;
     },
@@ -94,7 +93,6 @@ const authOptions: AuthOptions = {
         session.user.role = token.role as JWT["role"];
         session.user.access = token.access as JWT["access"];
         session.user.authProvider = token.authProvider as JWT["authProvider"];
-        session.user.test = "Test code from session";
       }
 
       return session;

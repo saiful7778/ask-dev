@@ -12,8 +12,10 @@ import {
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import Spinner from "@/components/Spinner";
+import { axiosPublic } from "@/lib/config/axios.config";
 import { loginSchema, type loginSchemaType } from "@/lib/schemas/authSchema";
 import errorResponse from "@/lib/utils/errorResponse";
+import type { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -34,6 +36,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: loginSchemaType) => {
     try {
       setIsLoading(true);
+      await axiosPublic.post<ApiResponseType<UserType>>("/api/login", e);
 
       await signIn("credentials", {
         email: e.email,

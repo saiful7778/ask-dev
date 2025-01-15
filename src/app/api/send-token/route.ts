@@ -1,4 +1,4 @@
-import { getJsonBodyData, sendBodyError } from "@/lib/helpers/getBodyData";
+import { getJsonBodyData } from "@/lib/helpers/getBodyData";
 import sendVerifyToken from "@/lib/helpers/sendVerifyToken";
 import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
 import serverResponse from "@/lib/helpers/serverResponse";
@@ -10,10 +10,6 @@ export async function POST(req: Request) {
     const body = await getJsonBodyData<{
       email: string;
     }>(req);
-
-    if (!body) {
-      return sendBodyError();
-    }
 
     const { email } = sendTokenSchema.parse(body);
 

@@ -16,7 +16,7 @@ export default async function sendVerifyToken(
           <br />
           <div>Thank you for joining <a href="${process.env.NEXTAUTH_URL}">ASK-DEV</a> To activate your account and start exploring, please click the verification link below:</div>
           <br />
-          <a href="${process.env.NEXTAUTH_URL}/verify?token=${token.token}">Click to verify</a>
+          <a href="${process.env.NEXTAUTH_URL}/verify?token=${token.token}">Click to verify your account</a>
           <br />
           <br />
           <div>Best Regards,</div>

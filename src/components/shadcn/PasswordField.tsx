@@ -16,10 +16,10 @@ const PasswordField = forwardRef<
         onClick={() => setPasswordShow((prev) => !prev)}
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-1/2 z-10 size-6 -translate-y-1/2"
+        className="absolute right-2 top-1/2 z-10 size-7 -translate-y-1/2 rounded-sm"
         type="button"
       >
-        {passwordShow ? <EyeIcon size={16}/> : <EyeOffIcon size={16}/>}
+        {passwordShow ? <EyeIcon size={16} /> : <EyeOffIcon size={16} />}
       </Button>
     </div>
   );

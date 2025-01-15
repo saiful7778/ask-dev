@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { getJsonBodyData, sendBodyError } from "@/lib/helpers/getBodyData";
+import { getJsonBodyData } from "@/lib/helpers/getBodyData";
 import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
 import serverResponse from "@/lib/helpers/serverResponse";
 import { tokenSchema } from "@/lib/schemas/authSchema";
@@ -11,10 +11,6 @@ export async function POST(req: Request) {
     const body = await getJsonBodyData<{
       token: string;
     }>(req);
-
-    if (!body) {
-      return sendBodyError();
-    }
 
     const { token } = tokenSchema.parse(body);
 

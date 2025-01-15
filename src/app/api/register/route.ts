@@ -6,6 +6,7 @@ import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
 import serverResponse from "@/lib/helpers/serverResponse";
 import { genSalt, hash } from "bcrypt";
 import sendVerifyToken from "@/lib/helpers/sendVerifyToken";
+import generateUsername from "@/lib/server/generateUsername";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
@@ -30,10 +31,13 @@ export async function POST(req: Request) {
     const saltValue = await genSalt(10);
     const hashedPassword = await hash(password, saltValue);
 
+    const username = await generateUsername(fullName);
+
     const user = await db.user.create({
       data: {
         name: fullName,
         email,
+        username,
         hashedPassword: hashedPassword,
       },
     });

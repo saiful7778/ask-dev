@@ -10,12 +10,32 @@ export default async function createVerifyToken(userId: string): Promise<{
 }> {
   const token = createToken(userId);
 
-  await db.verificationToken.deleteMany({
+  const tokenData = await db.verificationToken.findFirst({
     where: {
       userId,
     },
   });
 
+  if (tokenData) {
+    const expireTime = new Date(tokenData.expires);
+    const currentTime = new Date();
+
+    if (expireTime.getTime() <= currentTime.getTime()) {
+      await db.verificationToken.deleteMany({
+        where: {
+          userId,
+        },
+      });
+
+      return createNewDBToken(userId, token);
+    }
+    return tokenData;
+  }
+
+  return createNewDBToken(userId, token);
+}
+
+function createNewDBToken(userId: string, token: string) {
   return db.verificationToken.create({
     data: {
       userId,

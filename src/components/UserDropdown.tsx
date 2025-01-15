@@ -12,13 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "./shadcn/ui/dropdown-menu";
 import toast from "react-hot-toast";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
-  const session = useSession();
-
-  console.log(session);
-
   const handleLogout = () => {
     toast.promise(signOut, {
       loading: "Loading...",
