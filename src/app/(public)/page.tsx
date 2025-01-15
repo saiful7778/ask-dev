@@ -6,6 +6,7 @@ const postDataArray = [
   {
     id: "1",
     title: "Introduction to TypeScript",
+    slug: "",
     author: {
       id: "a1",
       name: "John Doe",
@@ -25,6 +26,7 @@ const postDataArray = [
   {
     id: "2",
     title: "React for Beginners",
+    slug: "",
     author: {
       id: "a2",
       name: "Jane Smith",
@@ -44,6 +46,7 @@ const postDataArray = [
   {
     id: "3",
     title: "Mastering CSS Grid",
+    slug: "",
     author: {
       id: "a3",
       name: "Emily Clark",
@@ -63,6 +66,7 @@ const postDataArray = [
   {
     id: "4",
     title: "Exploring GraphQL Basics",
+    slug: "",
     author: {
       id: "a4",
       name: "Carlos Lee",
@@ -82,6 +86,7 @@ const postDataArray = [
   {
     id: "5",
     title: "JavaScript Async/Await Explained",
+    slug: "",
     author: {
       id: "a5",
       name: "Sarah Davis",
@@ -101,6 +106,7 @@ const postDataArray = [
   {
     id: "6",
     title: "Building REST APIs with Node.js",
+    slug: "",
     author: {
       id: "a6",
       name: "Michael Brown",
@@ -120,6 +126,7 @@ const postDataArray = [
   {
     id: "7",
     title: "Vue.js vs React: A Comparison",
+    slug: "",
     author: {
       id: "a7",
       name: "David Martinez",
@@ -139,6 +146,7 @@ const postDataArray = [
   {
     id: "8",
     title: "CSS Flexbox: A Deep Dive",
+    slug: "",
     author: {
       id: "a8",
       name: "Lily Zhang",
@@ -158,6 +166,7 @@ const postDataArray = [
   {
     id: "9",
     title: "Understanding Docker and Containers",
+    slug: "",
     author: {
       id: "a9",
       name: "Lucas White",
@@ -177,6 +186,7 @@ const postDataArray = [
   {
     id: "10",
     title: "The Importance of Web Accessibility",
+    slug: "",
     author: {
       id: "a10",
       name: "Olivia Taylor",
@@ -196,6 +206,7 @@ const postDataArray = [
   {
     id: "11",
     title: "Introduction to Webpack 5",
+    slug: "",
     author: {
       id: "a11",
       name: "James Wilson",
@@ -215,6 +226,7 @@ const postDataArray = [
   {
     id: "12",
     title: "Exploring Machine Learning with Python",
+    slug: "",
     author: {
       id: "a12",
       name: "Ethan Clark",

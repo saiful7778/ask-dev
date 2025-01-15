@@ -13,7 +13,7 @@ const GlobalError: React.FC<{
         Something went wrong
         <span className="text-accent">!</span>
       </h2>
-      <pre>
+      <pre className="text-wrap text-center">
         <code>{error.message}</code>
       </pre>
       <div className="flex items-center gap-4">

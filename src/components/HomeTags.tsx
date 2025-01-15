@@ -1,6 +1,7 @@
 import numberFormat from "@/lib/utils/numberFormat";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { AnimatedList } from "./shadcn/magic-ui/animated-list";
 
 const tagData = [
   { id: "1", name: "javascript", postCount: 5000 },
@@ -12,12 +13,14 @@ const tagData = [
 
 const HomeTags: React.FC = () => {
   return (
-    <div className="h-fit rounded-md bg-secondary text-secondary-foreground">
+    <div className="h-fit rounded-md border bg-secondary text-secondary-foreground duration-300">
       <h6 className="p-5 text-base font-semibold leading-6">Popular Tags</h6>
       <div className="px-2 pb-2">
-        {tagData?.map((tag, idx) => (
-          <TagItem key={`tag-${idx}`} tagData={tag} />
-        ))}
+        <AnimatedList className="gap-0" delay={200}>
+          {tagData?.map((tag, idx) => (
+            <TagItem key={`tag-${idx}`} tagData={tag} />
+          ))}
+        </AnimatedList>
       </div>
     </div>
   );
@@ -32,7 +35,7 @@ const TagItem: React.FC<{
       className="group flex items-center justify-between gap-3 rounded-md px-4 py-3 hover:bg-card"
     >
       <span className="flex flex-col items-start gap-1">
-        <span className="text-sm font-semibold capitalize leading-[18px]">
+        <span className="text-sm font-semibold capitalize leading-[18px] hover:underline">
           {name}
         </span>
         <span className="text-xs font-normal leading-4 text-[#97989D]">

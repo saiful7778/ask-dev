@@ -13,7 +13,7 @@ const PostReactButton = forwardRef<HTMLButtonElement, PostReactButtonProps>(
       <button
         type="button"
         className={cn(
-          "inline-flex size-10 items-center justify-center rounded-full bg-card p-2",
+          "inline-flex size-10 items-center justify-center rounded-full border border-secondary-foreground/10 bg-card p-2",
           className,
         )}
         ref={ref}

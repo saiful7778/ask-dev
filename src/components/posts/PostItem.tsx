@@ -9,6 +9,7 @@ interface PostDataProps {
   postData: {
     id: string;
     title: string;
+    slug: string;
     author: {
       id: string;
       name: string;
@@ -31,6 +32,7 @@ const PostItem: React.FC<PostDataProps> = ({ postData }) => {
   const {
     id,
     title,
+    slug,
     author,
     tags,
     viewCount,
@@ -45,9 +47,14 @@ const PostItem: React.FC<PostDataProps> = ({ postData }) => {
     addSuffix: true,
   });
   return (
-    <div className="rounded-md bg-secondary p-5 text-secondary-foreground">
+    <div className="rounded-md border bg-secondary p-5 text-secondary-foreground">
       <div className="flex items-center justify-between gap-1">
-        <h4 className="text-lg font-semibold">{title}</h4>
+        <Link
+          href={`/post/${slug}`}
+          className="text-lg font-semibold hover:underline"
+        >
+          {title}
+        </Link>
         <PostReactButton isReact={isReact} />
       </div>
       <div className="flex items-center gap-2">

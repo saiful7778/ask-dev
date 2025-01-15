@@ -2,6 +2,7 @@ import numberFormat from "@/lib/utils/numberFormat";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/ui/avatar";
+import { AnimatedList } from "./shadcn/magic-ui/animated-list";
 
 const memberData = [
   {
@@ -29,12 +30,14 @@ const memberData = [
 
 const Members: React.FC = () => {
   return (
-    <div className="h-fit rounded-md bg-secondary text-secondary-foreground">
+    <div className="h-fit rounded-md border bg-secondary text-secondary-foreground">
       <h6 className="p-5 text-base font-semibold leading-6">Top members</h6>
       <div className="px-2 pb-2">
-        {memberData?.map((member, idx) => (
-          <SingleMember key={`member-${idx}`} memberData={member} />
-        ))}
+        <AnimatedList className="gap-0" delay={200}>
+          {memberData?.map((member, idx) => (
+            <SingleMember key={`member-${idx}`} memberData={member} />
+          ))}
+        </AnimatedList>
       </div>
     </div>
   );
@@ -50,24 +53,24 @@ const SingleMember: React.FC<{
   };
 }> = ({ memberData: { username, name, avatar, postCount } }) => {
   return (
-    <div className="group flex items-center gap-3 rounded-md px-4 py-3 hover:bg-card">
-      <Avatar className="border-separate border">
+    <Link
+      href={`/profile/${username}`}
+      className="group flex items-center gap-3 rounded-md px-4 py-3 hover:bg-card"
+    >
+      <Avatar>
         <AvatarImage src={avatar} alt={name} />
         <AvatarFallback />
       </Avatar>
       <span className="mr-auto flex flex-col items-start gap-1">
-        <Link
-          href={`/profile/${username}`}
-          className="text-sm font-semibold capitalize leading-[18px] hover:underline"
-        >
+        <span className="text-sm font-semibold capitalize leading-[18px] hover:underline">
           {name}
-        </Link>
+        </span>
         <span className="text-xs font-normal leading-4 text-[#97989D]">
           {numberFormat(postCount)} Posts
         </span>
       </span>
       <ArrowRight />
-    </div>
+    </Link>
   );
 };
 
