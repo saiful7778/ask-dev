@@ -1,6 +1,7 @@
 "use client";
 import { createContext } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface StateContextProps {}
 
 export const StateContext = createContext<StateContextProps | null>(null);
