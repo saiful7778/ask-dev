@@ -47,6 +47,33 @@ body {
   body[data-scroll-locked] .topbar {
     padding-right: var(--removed-body-scroll-bar-size);
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 5px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
 }
 
 .hot-toast-item {
