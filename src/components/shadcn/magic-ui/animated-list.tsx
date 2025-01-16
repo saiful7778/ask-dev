@@ -26,7 +26,7 @@ export const AnimatedList = memo(
     }, [index, delay, childrenArray.length]);
 
     const itemsToShow = useMemo(() => {
-      const result = childrenArray.slice(0, index + 1).reverse();
+      const result = childrenArray.slice(0, index + 1);
       return result;
     }, [index, childrenArray]);
 

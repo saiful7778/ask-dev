@@ -4,6 +4,12 @@ import registerImage from "@/assets/images/register-banner-image.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "@/components/forms/auth-form/LoginForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login - ASK DEV",
+  description: "This is ask-dev login page",
+};
 
 const Login: React.FC = () => {
   return (
