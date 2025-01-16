@@ -1,4 +1,4 @@
-import numberFormat from "@/lib/utils/numberFormat";
+import numberFormat from "@/utils/numberFormat";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./shadcn/ui/avatar";

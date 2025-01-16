@@ -1,6 +1,6 @@
-import db from "../db";
-import { TOKEN_EXPIRES_TIME } from "../staticData";
-import { createToken } from "../utils/manageToken";
+import db from "@/lib/db";
+import { TOKEN_EXPIRES_TIME } from "@/lib/staticData";
+import { createToken } from "@/utils/server-utils/manageToken";
 
 export default async function createVerifyToken(userId: string): Promise<{
   id: string;

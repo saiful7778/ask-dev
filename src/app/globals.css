@@ -8,33 +8,6 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 97%;
-    --foreground: 208 18% 14%;
-    --card: 0 0% 100%;
-    --card-foreground: 208 18% 14%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 208 18% 14%;
-    --primary: 16 100% 40%;
-    --primary-foreground: 0 0% 97%;
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 208 18% 14%;
-    --muted: 0 0% 93%;
-    --muted-foreground: 208 18% 25%;
-    --accent: 16 100% 40%;
-    --accent-foreground: 0 0% 97%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 97%;
-    --border: 0 0% 90%;
-    --input: 0 0% 93%;
-    --ring: 16 100% 40%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --radius: 0.8rem;
-  }
-  .dark {
     --background: 208 18% 14%;
     --foreground: 0 0% 97%;
     --card: 208 16% 21%;
@@ -59,6 +32,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --radius: 0.8rem;
   }
 }
 
@@ -73,12 +47,12 @@ body {
   body[data-scroll-locked] .topbar {
     padding-right: var(--removed-body-scroll-bar-size);
   }
+}
 
-  .hot-toast-item {
-    background: theme("backgroundColor.background") !important;
-    border-width: 1px;
-    border-style: solid;
-    border-color: theme("borderColor.input") !important;
-    color: theme("colors.foreground") !important;
-  }
+.hot-toast-item {
+  background: theme("backgroundColor.background") !important;
+  border-width: 1px;
+  border-style: solid;
+  border-color: theme("borderColor.input") !important;
+  color: theme("colors.foreground") !important;
 }

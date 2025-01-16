@@ -1,5 +1,4 @@
 "use client";
-
 import PasswordField from "@/components/shadcn/PasswordField";
 import { Button } from "@/components/shadcn/ui/button";
 import {
@@ -10,47 +9,50 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/shadcn/ui/form";
-import { Input } from "@/components/shadcn/ui/input";
 import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
-import { loginSchema, type loginSchemaType } from "@/lib/schemas/authSchema";
+import {
+  resetPasswordSchema,
+  type resetPasswordType,
+} from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
-import type { ApiResponseType, UserType } from "@/types";
+import { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const LoginForm: React.FC = () => {
+const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  const form = useForm<loginSchemaType>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<resetPasswordType>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      token,
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
-  const handleSubmit = async (e: loginSchemaType) => {
+  const handleSubmit = async (e: resetPasswordType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>("/api/login", e);
+      if (!token) {
+        return toast.error("Token is required");
+      }
+      await axiosPublic.post<ApiResponseType<UserType>>(
+        "/api/reset_password",
+        e,
+      );
 
-      await signIn("credentials", {
-        email: e.email,
-        password: e.password,
-        redirect: true,
-        callbackUrl: "/",
-      });
-
-      toast.success("login successful");
+      toast.success("Password updated successfully");
       form.reset();
+      router.push("/login");
     } catch (err) {
       const response = errorResponse<
-        { field: keyof loginSchemaType; message: string }[]
+        { field: keyof resetPasswordType; message: string }[]
       >(err, (error) => {
         error?.forEach((fieldError) => {
           form.setError(fieldError?.field, {
@@ -71,14 +73,13 @@ const LoginForm: React.FC = () => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-3">
         <FormField
           control={form.control}
-          name="email"
+          name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>New Password</FormLabel>
               <FormControl>
-                <Input
-                  type="email"
-                  placeholder="Email address"
+                <PasswordField
+                  placeholder="New Password"
                   disabled={isLoading}
                   {...field}
                 />
@@ -89,18 +90,13 @@ const LoginForm: React.FC = () => {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <div className="flex items-center justify-between gap-2">
-                <FormLabel>Password</FormLabel>
-                <Link href="/forget_password" className="text-sm underline">
-                  Forget password?
-                </Link>
-              </div>
+              <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <PasswordField
-                  placeholder="Password"
+                  placeholder="Confirm Password"
                   disabled={isLoading}
                   {...field}
                 />
@@ -115,11 +111,11 @@ const LoginForm: React.FC = () => {
           aria-disabled={isLoading ? "false" : "true"}
           disabled={isLoading}
         >
-          {isLoading ? <Spinner /> : "Login"}
+          {isLoading ? <Spinner /> : "Reset password"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

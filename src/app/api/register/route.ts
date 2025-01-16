@@ -1,12 +1,12 @@
 import db from "@/lib/db";
 import { registerSchema } from "@/lib/schemas/authSchema";
-import { getJsonBodyData } from "@/lib/helpers/getBodyData";
-import { getUserByEmail } from "@/lib/utils/getUser";
-import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
-import serverResponse from "@/lib/helpers/serverResponse";
+import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
+import { getUserByEmail } from "@/helpers/server-helper/getUser";
+import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
+import serverResponse from "@/helpers/server-helper/serverResponse";
 import { genSalt, hash } from "bcrypt";
-import sendVerifyToken from "@/lib/helpers/sendVerifyToken";
-import generateUsername from "@/lib/server/generateUsername";
+import sendVerifyToken from "@/helpers/server-helper/sendVerifyToken";
+import generateUsername from "@/utils/server-utils/generateUsername";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {

@@ -245,7 +245,7 @@ const postDataArray = [
   },
 ];
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = async () => {
   return (
     <div className="flex gap-5">
       <aside className="sticky left-0 top-[76px] h-fit w-[20%] space-y-5">

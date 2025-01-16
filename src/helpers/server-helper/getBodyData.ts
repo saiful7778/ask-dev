@@ -1,4 +1,4 @@
-import { ServerError } from "@/lib/helpers/ServerError";
+import { ServerError } from "@/helpers/server-helper/ServerError";
 
 export async function getJsonBodyData<T>(req: Request): Promise<T | null> {
   try {

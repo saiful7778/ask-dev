@@ -1,8 +1,8 @@
-import { getJsonBodyData } from "@/lib/helpers/getBodyData";
-import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
-import serverResponse from "@/lib/helpers/serverResponse";
+import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
+import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
+import serverResponse from "@/helpers/server-helper/serverResponse";
 import { loginSchema } from "@/lib/schemas/authSchema";
-import { getUserByEmail } from "@/lib/utils/getUser";
+import { getUserByEmail } from "@/helpers/server-helper/getUser";
 import { compare } from "bcrypt";
 
 export async function POST(req: Request) {

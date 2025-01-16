@@ -1,9 +1,9 @@
-import { getJsonBodyData } from "@/lib/helpers/getBodyData";
-import sendVerifyToken from "@/lib/helpers/sendVerifyToken";
-import serverAsyncResolve from "@/lib/helpers/serverAsyncResolve";
-import serverResponse from "@/lib/helpers/serverResponse";
+import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
+import sendVerifyToken from "@/helpers/server-helper/sendVerifyToken";
+import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
+import serverResponse from "@/helpers/server-helper/serverResponse";
 import { sendTokenSchema } from "@/lib/schemas/authSchema";
-import { getUserByEmail } from "@/lib/utils/getUser";
+import { getUserByEmail } from "@/helpers/server-helper/getUser";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {

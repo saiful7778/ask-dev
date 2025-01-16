@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "../shadcn/ui/dialog";
 import { Button } from "../shadcn/ui/button";
-import errorResponse from "@/lib/utils/errorResponse";
+import errorResponse from "@/utils/client-utils/errorResponse";
 import toast from "react-hot-toast";
 import { axiosPublic } from "@/lib/config/axios.config";
 import { ApiResponseType } from "@/types";

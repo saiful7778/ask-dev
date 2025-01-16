@@ -3,12 +3,13 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  id                String              @id @default(uuid())
   name              String
   role              ROLE                @default(user)
   username          String              @unique
@@ -32,17 +33,17 @@ enum ROLE {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String?
   session_state     String?
 
   createdAt DateTime @default(now())
@@ -54,9 +55,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(uuid())
   sessionToken String   @unique
-  userId       String   @db.ObjectId
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -65,8 +66,8 @@ model Session {
 }
 
 model VerificationToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId  String   @db.ObjectId
+  id      String   @id @default(uuid())
+  userId  String
   user    User     @relation(fields: [userId], references: [id])
   token   String
   expires DateTime
@@ -74,10 +75,9 @@ model VerificationToken {
   @@unique([token])
 }
 
-// Optional for WebAuthn support
 model Authenticator {
-  credentialID         String  @id @map("_id")
-  userId               String  @db.ObjectId
+  credentialID         String  @id
+  userId               String
   providerAccountId    String
   credentialPublicKey  String
   counter              Int

@@ -3,17 +3,20 @@ import db from "@/lib/db";
 import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
 import serverResponse from "@/helpers/server-helper/serverResponse";
-import { tokenSchema } from "@/lib/schemas/authSchema";
+import { resetPasswordSchema } from "@/lib/schemas/authSchema";
 import { getUserById } from "@/helpers/server-helper/getUser";
 import { verifyToken } from "@/utils/server-utils/manageToken";
+import { hash, genSalt } from "bcrypt";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
     const body = await getJsonBodyData<{
       token: string;
+      newPassword: string;
+      confirmPassword: string;
     }>(req);
 
-    const { token } = tokenSchema.parse(body);
+    const { token, newPassword } = resetPasswordSchema.parse(body);
 
     const userId = await verifyToken<string>(token);
 
@@ -37,14 +40,15 @@ export async function POST(req: Request) {
 
     const tokenData = await getTokenData({ where: { userId: user.id } });
 
-    const currentTime = new Date();
+    const saltValue = await genSalt(10);
+    const hashedPassword = await hash(newPassword, saltValue);
 
     await db.user.update({
       where: {
         id: user.id,
       },
       data: {
-        emailVerified: currentTime.toISOString(),
+        hashedPassword,
       },
     });
 
@@ -56,8 +60,7 @@ export async function POST(req: Request) {
 
     return serverResponse({
       success: true,
-      message: "Email is verified",
-      status: 201,
+      message: "Password reset successfully",
     });
   });
 }

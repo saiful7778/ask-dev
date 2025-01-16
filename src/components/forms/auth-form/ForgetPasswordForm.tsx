@@ -1,6 +1,4 @@
 "use client";
-
-import PasswordField from "@/components/shadcn/PasswordField";
 import { Button } from "@/components/shadcn/ui/button";
 import {
   Form,
@@ -13,44 +11,40 @@ import {
 import { Input } from "@/components/shadcn/ui/input";
 import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
-import { loginSchema, type loginSchemaType } from "@/lib/schemas/authSchema";
+import {
+  forgetPasswordSchema,
+  type forgetPasswordType,
+} from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
-import type { ApiResponseType, UserType } from "@/types";
+import { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const LoginForm: React.FC = () => {
+const ForgetPasswordForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const form = useForm<loginSchemaType>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<forgetPasswordType>({
+    resolver: zodResolver(forgetPasswordSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  const handleSubmit = async (e: loginSchemaType) => {
+  const handleSubmit = async (e: forgetPasswordType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>("/api/login", e);
+      await axiosPublic.post<ApiResponseType<UserType>>(
+        "/api/forget_password",
+        e,
+      );
 
-      await signIn("credentials", {
-        email: e.email,
-        password: e.password,
-        redirect: true,
-        callbackUrl: "/",
-      });
-
-      toast.success("login successful");
+      toast.success("Reset email was sent to your mail.");
       form.reset();
     } catch (err) {
       const response = errorResponse<
-        { field: keyof loginSchemaType; message: string }[]
+        { field: keyof forgetPasswordType; message: string }[]
       >(err, (error) => {
         error?.forEach((fieldError) => {
           form.setError(fieldError?.field, {
@@ -87,39 +81,17 @@ const LoginForm: React.FC = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center justify-between gap-2">
-                <FormLabel>Password</FormLabel>
-                <Link href="/forget_password" className="text-sm underline">
-                  Forget password?
-                </Link>
-              </div>
-              <FormControl>
-                <PasswordField
-                  placeholder="Password"
-                  disabled={isLoading}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <Button
           type="submit"
           className="w-full"
           aria-disabled={isLoading ? "false" : "true"}
           disabled={isLoading}
         >
-          {isLoading ? <Spinner /> : "Login"}
+          {isLoading ? <Spinner /> : "Send request"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default LoginForm;
+export default ForgetPasswordForm;

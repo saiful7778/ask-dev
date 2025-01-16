@@ -19,7 +19,7 @@ import PasswordField from "@/components/shadcn/PasswordField";
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
 import toast from "react-hot-toast";
-import errorResponse from "@/lib/utils/errorResponse";
+import errorResponse from "@/utils/client-utils/errorResponse";
 import OTPSendDialog from "@/components/auth/OTPSendDialog";
 import { axiosPublic } from "@/lib/config/axios.config";
 import type { ApiResponseType, UserType } from "@/types";

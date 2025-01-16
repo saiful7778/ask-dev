@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/ui/avatar";
 import { Badge } from "../shadcn/ui/badge";
 import PostReactButton from "./PostReactButton";
 import { formatDistanceToNow } from "date-fns";
-import numberFormat from "@/lib/utils/numberFormat";
+import numberFormat from "@/utils/numberFormat";
 import PostItemAnimation from "./PostItemAnimation";
 
 interface PostDataProps {

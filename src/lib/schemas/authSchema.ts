@@ -42,5 +42,18 @@ export const sendTokenSchema = z.object({
   email: emailValidation,
 });
 
+export const forgetPasswordSchema = z.object({
+  email: emailValidation,
+});
+export const resetPasswordSchema = z.object({
+  token: z
+    .string({ required_error: "Token is required" })
+    .min(1, "Token is required"),
+  newPassword: passwordValidation,
+  confirmPassword: passwordValidation,
+});
+
 export type registerSchemaType = z.infer<typeof registerSchema>;
 export type loginSchemaType = z.infer<typeof loginSchema>;
+export type forgetPasswordType = z.infer<typeof forgetPasswordSchema>;
+export type resetPasswordType = z.infer<typeof resetPasswordSchema>;

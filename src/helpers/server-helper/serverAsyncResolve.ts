@@ -1,8 +1,8 @@
 import type { NextResponse } from "next/server";
-import serverResponse from "@/lib/helpers/serverResponse";
+import serverResponse from "@/helpers/server-helper/serverResponse";
 import type { ServerResponseType } from "@/types";
 import { ZodError } from "zod";
-import validationErrors from "../utils/validationErrors";
+import validationErrors from "@/utils/server-utils/validationErrors";
 
 export default async function serverAsyncResolve<T>(
   asyncCallback: () => Promise<NextResponse<ServerResponseType<T>>>,
@@ -24,6 +24,18 @@ export default async function serverAsyncResolve<T>(
             success: false,
             error: err.message,
             status: 400,
+          });
+        case "TokenNotFound":
+          return serverResponse({
+            success: false,
+            error: err.message,
+            status: 404,
+          });
+        case "TokenExpired":
+          return serverResponse({
+            success: false,
+            error: err.message,
+            status: 401,
           });
 
         default:

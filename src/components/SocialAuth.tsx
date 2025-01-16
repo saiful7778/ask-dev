@@ -16,7 +16,9 @@ const SocialAuth: React.FC = () => {
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
     try {
-      await signIn(provider);
+      await signIn(provider, {
+        callbackUrl: DEFAULT_LOGIN_REDIRECT,
+      });
       router.push(DEFAULT_LOGIN_REDIRECT);
     } catch (err) {
       if (err instanceof Error) {

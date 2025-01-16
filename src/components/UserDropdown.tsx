@@ -16,11 +16,16 @@ import { signOut } from "next-auth/react";
 
 const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
   const handleLogout = () => {
-    toast.promise(signOut, {
-      loading: "Loading...",
-      success: "Logged out",
-      error: "Error to log out",
-    });
+    toast.promise(
+      async () => {
+        await signOut({ callbackUrl: "/login" });
+      },
+      {
+        loading: "Loading...",
+        success: "Logged out",
+        error: "Error to log out",
+      },
+    );
   };
 
   return (

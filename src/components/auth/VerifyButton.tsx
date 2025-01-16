@@ -2,15 +2,12 @@
 import { Button } from "@/components/shadcn/ui/button";
 import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
-import errorResponse from "@/lib/utils/errorResponse";
+import errorResponse from "@/utils/client-utils/errorResponse";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const VerifyButton: React.FC<{ disabled: boolean; token: string }> = ({
-  disabled,
-  token,
-}) => {
+const VerifyButton: React.FC<{ token: string }> = ({ token }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
@@ -33,7 +30,7 @@ const VerifyButton: React.FC<{ disabled: boolean; token: string }> = ({
       type="button"
       className="w-full"
       onClick={handleTokenVerify}
-      disabled={disabled || isLoading}
+      disabled={isLoading}
     >
       {isLoading ? <Spinner /> : "Verify"}
     </Button>

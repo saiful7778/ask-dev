@@ -1,6 +1,6 @@
 import { UserType } from "@/types";
 import createVerifyToken from "./createVerifyToken";
-import sendEmail from "./sendEmail";
+import sendEmail from "@/utils/server-utils/sendEmail";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export default async function sendVerifyToken(
