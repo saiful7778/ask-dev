@@ -14,12 +14,18 @@ import {
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { DEFAULT_LOGIN_PAGE } from "@/lib/routes";
+import { LayoutDashboard, LogOut, Sparkles, UserCog } from "lucide-react";
 
 const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
+  const router = useRouter();
+
   const handleLogout = () => {
     toast.promise(
       async () => {
-        await signOut({ callbackUrl: "/login" });
+        await signOut();
+        router.push(DEFAULT_LOGIN_PAGE);
       },
       {
         loading: "Loading...",
@@ -39,7 +45,7 @@ const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="min-w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.name}</p>
@@ -50,12 +56,31 @@ const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/dashboard/profile">Profile</Link>
+          <DropdownMenuItem>
+            <Sparkles />
+            <span>Upgrade to Pro</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
+        <DropdownMenuGroup>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard">
+              <LayoutDashboard />
+              <span>Dashboard</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/profile">
+              <UserCog />
+              <span>Profile</span>
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut />
+          <span>Log out</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

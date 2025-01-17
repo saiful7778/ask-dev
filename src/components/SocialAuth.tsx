@@ -6,9 +6,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import { useRouter } from "next/navigation";
-import { DEFAULT_LOGIN_REDIRECT } from "@/lib/staticData";
+import { DEFAULT_AUTH_REDIRECT } from "@/lib/routes";
 
-const SocialAuth: React.FC = () => {
+const SocialAuth: React.FC<{ callbackUrl?: string | undefined }> = ({
+  callbackUrl,
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
@@ -17,9 +19,10 @@ const SocialAuth: React.FC = () => {
     setIsLoading(true);
     try {
       await signIn(provider, {
-        callbackUrl: DEFAULT_LOGIN_REDIRECT,
+        redirect: false,
       });
-      router.push(DEFAULT_LOGIN_REDIRECT);
+      toast.success("login successful");
+      router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message || "Something went wrong");

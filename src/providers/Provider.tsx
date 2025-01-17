@@ -1,5 +1,5 @@
 "use client";
-import StateContextProvider from "@/contexts/StateContext";
+import { StateContextProvider } from "@/contexts/StateContext";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 

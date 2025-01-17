@@ -1,80 +1,12 @@
-import type { AuthOptions, User } from "next-auth";
+import type { AuthOptions } from "next-auth";
 import type { JWT } from "next-auth/jwt";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import db from "./db";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { loginSchema } from "./schemas/authSchema";
-import { getUserByEmail } from "../helpers/server-helper/getUser";
-import { compare } from "bcrypt";
+import nextAuthConfig from "./config/next-auth.config";
 
-const authOptions: AuthOptions = {
+export const nextAuthOptions: AuthOptions = {
+  ...nextAuthConfig,
   adapter: PrismaAdapter(db),
-  providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email", placeholder: "Email Address" },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
-        },
-      },
-      async authorize(
-        credentials: Record<"email" | "password", string> | undefined,
-      ): Promise<User | null> {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            return null;
-          }
-          const isValid = loginSchema.safeParse(credentials);
-
-          if (!isValid.success) return null;
-
-          const { email, password } = isValid.data;
-
-          const userData = await getUserByEmail(email);
-
-          if (
-            !userData ||
-            !userData?.hashedPassword ||
-            !userData.access ||
-            !userData?.emailVerified
-          )
-            return null;
-
-          const isPasswordValid = await compare(
-            password,
-            userData.hashedPassword,
-          );
-
-          if (!isPasswordValid) return null;
-
-          return {
-            id: userData.id.toString(),
-            authProvider: "Credentials",
-            name: userData.name,
-            image: userData.image,
-            email: userData.email,
-            role: userData.role,
-            access: userData.access,
-          };
-        } catch {
-          return null;
-        }
-      },
-    }),
-  ],
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
@@ -123,5 +55,3 @@ const authOptions: AuthOptions = {
     maxAge: 5 * 60 * 60,
   },
 };
-
-export default authOptions;

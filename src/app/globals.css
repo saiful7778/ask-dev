@@ -33,6 +33,14 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --radius: 0.8rem;
+    --sidebar-background: 210 16% 18%;
+    --sidebar-foreground: 0 0% 97%;
+    --sidebar-primary: 208 16% 21%;
+    --sidebar-primary-foreground: 0 0% 97%;
+    --sidebar-accent: 208 16% 21%;
+    --sidebar-accent-foreground: 0 0% 97%;
+    --sidebar-border: 208 16% 21%;
+    --sidebar-ring: 16 100% 60%;
   }
 }
 

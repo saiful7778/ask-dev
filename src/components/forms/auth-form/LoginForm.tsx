@@ -22,9 +22,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { DEFAULT_AUTH_REDIRECT } from "@/lib/routes";
+import { useRouter } from "next/navigation";
 
-const LoginForm: React.FC = () => {
+const LoginForm: React.FC<{ callbackUrl: string | undefined }> = ({
+  callbackUrl,
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const form = useForm<loginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -45,12 +50,11 @@ const LoginForm: React.FC = () => {
       await signIn("credentials", {
         email: e.email,
         password: e.password,
-        redirect: true,
-        callbackUrl: "/",
       });
 
       toast.success("login successful");
       form.reset();
+      router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       const response = errorResponse<
         { field: keyof loginSchemaType; message: string }[]
