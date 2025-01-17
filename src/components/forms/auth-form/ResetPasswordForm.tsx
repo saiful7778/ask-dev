@@ -43,7 +43,7 @@ const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
         return toast.error("Token is required");
       }
       await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/reset_password",
+        "/api/account/auth/reset_password",
         e,
       );
 

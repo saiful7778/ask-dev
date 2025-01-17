@@ -41,7 +41,10 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: registerSchemaType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>("/api/register", e);
+      await axiosPublic.post<ApiResponseType<UserType>>(
+        "/api/account/auth/register",
+        e,
+      );
       toast.success("Registration successful");
       setOpenOTPSendDialog(true);
       setEmail(e.email);

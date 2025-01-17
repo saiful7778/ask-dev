@@ -14,7 +14,7 @@ const VerifyButton: React.FC<{ token: string }> = ({ token }) => {
   const handleTokenVerify = async () => {
     try {
       setIsLoading(true);
-      await axiosPublic.post("/api/verify", { token });
+      await axiosPublic.post("/api/account/auth/verify", { token });
       toast.success("Email verified successfully");
       router.push("/login");
     } catch (err) {

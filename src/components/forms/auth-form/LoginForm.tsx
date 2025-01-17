@@ -37,7 +37,10 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: loginSchemaType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>("/api/login", e);
+      await axiosPublic.post<ApiResponseType<UserType>>(
+        "/api/account/auth/login",
+        e,
+      );
 
       await signIn("credentials", {
         email: e.email,

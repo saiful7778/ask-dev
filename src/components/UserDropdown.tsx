@@ -13,6 +13,7 @@ import {
 } from "./shadcn/ui/dropdown-menu";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
   const handleLogout = () => {
@@ -49,7 +50,9 @@ const UserDropdown: React.FC<{ user: User }> = ({ user }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/profile">Profile</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>

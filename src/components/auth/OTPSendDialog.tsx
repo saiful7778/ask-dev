@@ -19,9 +19,12 @@ const OTPSendDialog: React.FC<{
 }> = ({ openOTPSendDialog, setOpenOTPSendDialog, email }) => {
   const handleResendEmail = async () => {
     try {
-      await axiosPublic.post<ApiResponseType<string>>("/api/send-token", {
-        email,
-      });
+      await axiosPublic.post<ApiResponseType<string>>(
+        "/api/account/auth/send-token",
+        {
+          email,
+        },
+      );
       toast.success("Verification email sent successfully");
     } catch (err) {
       const response = errorResponse(err);

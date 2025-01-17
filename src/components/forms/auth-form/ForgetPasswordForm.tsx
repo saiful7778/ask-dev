@@ -36,7 +36,7 @@ const ForgetPasswordForm: React.FC = () => {
     try {
       setIsLoading(true);
       await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/forget_password",
+        "/api/account/auth/forget_password",
         e,
       );
 
