@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   registerSchema,
-  type registerSchemaType,
+  type RegisterSchemaType,
 } from "@/lib/schemas/authSchema";
 import {
   Form,
@@ -29,7 +29,7 @@ const RegisterForm: React.FC = () => {
   const [openOTPSendDialog, setOpenOTPSendDialog] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const form = useForm<registerSchemaType>({
+  const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       fullName: "",
@@ -38,7 +38,7 @@ const RegisterForm: React.FC = () => {
     },
   });
 
-  const handleSubmit = async (e: registerSchemaType) => {
+  const handleSubmit = async (e: RegisterSchemaType) => {
     try {
       setIsLoading(true);
       await axiosPublic.post<ApiResponseType<UserType>>(
@@ -51,7 +51,7 @@ const RegisterForm: React.FC = () => {
       form.reset();
     } catch (err) {
       const response = errorResponse<
-        { field: keyof registerSchemaType; message: string }[]
+        { field: keyof RegisterSchemaType; message: string }[]
       >(err, (error) => {
         console.log(error);
         error?.forEach((fieldError) => {

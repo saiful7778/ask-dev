@@ -13,7 +13,7 @@ import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
 import {
   forgetPasswordSchema,
-  type forgetPasswordType,
+  type ForgetPasswordType,
 } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
 import { ApiResponseType, UserType } from "@/types";
@@ -25,14 +25,14 @@ import toast from "react-hot-toast";
 const ForgetPasswordForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const form = useForm<forgetPasswordType>({
+  const form = useForm<ForgetPasswordType>({
     resolver: zodResolver(forgetPasswordSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  const handleSubmit = async (e: forgetPasswordType) => {
+  const handleSubmit = async (e: ForgetPasswordType) => {
     try {
       setIsLoading(true);
       await axiosPublic.post<ApiResponseType<UserType>>(
@@ -44,7 +44,7 @@ const ForgetPasswordForm: React.FC = () => {
       form.reset();
     } catch (err) {
       const response = errorResponse<
-        { field: keyof forgetPasswordType; message: string }[]
+        { field: keyof ForgetPasswordType; message: string }[]
       >(err, (error) => {
         error?.forEach((fieldError) => {
           form.setError(fieldError?.field, {

@@ -6,3 +6,5 @@ export const SIDEBAR_WIDTH = "14rem";
 export const SIDEBAR_WIDTH_MOBILE = "18rem";
 export const SIDEBAR_WIDTH_ICON = "3rem";
 export const SIDEBAR_KEYBOARD_SHORTCUT = "b";
+
+export const MAX_IMAGE_SIZE = 5 * 1024 * 1024;

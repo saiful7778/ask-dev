@@ -53,7 +53,7 @@ export const resetPasswordSchema = z.object({
   confirmPassword: passwordValidation,
 });
 
-export type registerSchemaType = z.infer<typeof registerSchema>;
-export type loginSchemaType = z.infer<typeof loginSchema>;
-export type forgetPasswordType = z.infer<typeof forgetPasswordSchema>;
-export type resetPasswordType = z.infer<typeof resetPasswordSchema>;
+export type RegisterSchemaType = z.infer<typeof registerSchema>;
+export type LoginSchemaType = z.infer<typeof loginSchema>;
+export type ForgetPasswordType = z.infer<typeof forgetPasswordSchema>;
+export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;

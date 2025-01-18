@@ -13,7 +13,7 @@ import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
 import {
   resetPasswordSchema,
-  type resetPasswordType,
+  type ResetPasswordType,
 } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
 import { ApiResponseType, UserType } from "@/types";
@@ -27,7 +27,7 @@ const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const form = useForm<resetPasswordType>({
+  const form = useForm<ResetPasswordType>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       token,
@@ -36,7 +36,7 @@ const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
     },
   });
 
-  const handleSubmit = async (e: resetPasswordType) => {
+  const handleSubmit = async (e: ResetPasswordType) => {
     try {
       setIsLoading(true);
       if (!token) {
@@ -52,7 +52,7 @@ const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
       router.push("/login");
     } catch (err) {
       const response = errorResponse<
-        { field: keyof resetPasswordType; message: string }[]
+        { field: keyof ResetPasswordType; message: string }[]
       >(err, (error) => {
         error?.forEach((fieldError) => {
           form.setError(fieldError?.field, {

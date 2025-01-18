@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/shadcn/ui/input";
 import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
-import { loginSchema, type loginSchemaType } from "@/lib/schemas/authSchema";
+import { loginSchema, type LoginSchemaType } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
 import type { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ const LoginForm: React.FC<{ callbackUrl: string | undefined }> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const form = useForm<loginSchemaType>({
+  const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -39,7 +39,7 @@ const LoginForm: React.FC<{ callbackUrl: string | undefined }> = ({
     },
   });
 
-  const handleSubmit = async (e: loginSchemaType) => {
+  const handleSubmit = async (e: LoginSchemaType) => {
     try {
       setIsLoading(true);
       await axiosPublic.post<ApiResponseType<UserType>>(
@@ -57,7 +57,7 @@ const LoginForm: React.FC<{ callbackUrl: string | undefined }> = ({
       router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       const response = errorResponse<
-        { field: keyof loginSchemaType; message: string }[]
+        { field: keyof LoginSchemaType; message: string }[]
       >(err, (error) => {
         error?.forEach((fieldError) => {
           form.setError(fieldError?.field, {
