@@ -5,7 +5,6 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
-import { useRouter } from "next/navigation";
 import { DEFAULT_AUTH_REDIRECT } from "@/lib/routes";
 
 const SocialAuth: React.FC<{ callbackUrl?: string | undefined }> = ({
@@ -13,15 +12,13 @@ const SocialAuth: React.FC<{ callbackUrl?: string | undefined }> = ({
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const router = useRouter();
-
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
     try {
       await signIn(provider, {
-        redirect: false,
+        redirect: true,
+        callbackUrl: callbackUrl || DEFAULT_AUTH_REDIRECT,
       });
-      router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message || "Something went wrong");
