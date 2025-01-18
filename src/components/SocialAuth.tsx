@@ -21,7 +21,6 @@ const SocialAuth: React.FC<{ callbackUrl?: string | undefined }> = ({
       await signIn(provider, {
         redirect: false,
       });
-      toast.success("login successful");
       router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       if (err instanceof Error) {

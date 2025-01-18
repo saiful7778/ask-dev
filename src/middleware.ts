@@ -39,7 +39,7 @@ export default withAuth(
 
         if (isPublicRoute) return true;
 
-        if (isApiAuthRoute) return isLogged;
+        if (isApiAuthRoute) return true;
 
         return isLogged;
       },
