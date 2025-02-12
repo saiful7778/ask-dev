@@ -47,6 +47,7 @@ const Register: React.FC = () => {
           width={600}
           height={1200}
           className="h-full w-full object-cover"
+          priority={true}
         />
       </div>
     </div>

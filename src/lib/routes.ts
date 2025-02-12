@@ -12,4 +12,11 @@ export const AUTH_ROUTES = [
   "/reset_password",
 ];
 
-export const AUTH_API_ROUTES = ["/api/user"];
+export const AUTH_API_ROUTES = [
+  "/api/account/auth/forget_password",
+  "/api/account/auth/reset_password",
+  "/api/account/auth/login",
+  "/api/account/auth/register",
+  "/api/account/auth/verify",
+  "/api/account/auth/send-token",
+];

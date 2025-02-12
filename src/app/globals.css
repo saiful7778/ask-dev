@@ -91,3 +91,12 @@ body {
   border-color: theme("borderColor.input") !important;
   color: theme("colors.foreground") !important;
 }
+
+.tiptap-editor p.is-editor-empty:first-child::before {
+  color: hsl(var(--secondary-foreground));
+  opacity: 0.5;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

@@ -15,7 +15,6 @@ import Spinner from "@/components/Spinner";
 import { axiosPublic } from "@/lib/config/axios.config";
 import { loginSchema, type LoginSchemaType } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
-import type { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -42,14 +41,12 @@ const LoginForm: React.FC<{ callbackUrl: string | undefined }> = ({
   const handleSubmit = async (e: LoginSchemaType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/account/auth/login",
-        e,
-      );
+      await axiosPublic.post("/api/account/auth/login", e);
 
       await signIn("credentials", {
         email: e.email,
         password: e.password,
+        redirect: false,
       });
 
       toast.success("login successful");

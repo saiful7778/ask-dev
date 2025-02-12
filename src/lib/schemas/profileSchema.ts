@@ -1,22 +1,11 @@
 import * as z from "zod";
-import { MAX_IMAGE_SIZE } from "../staticData";
 
 export const profileDetailsSchema = z.object({
-  avatar: z
-    .instanceof(File, {
-      message: "Please upload the valid image file",
-    })
-    .refine(
-      (file) => ["image/jpg", "image/jpeg", "image/png"].includes(file.type),
-      {
-        message: "Image must be in JPG or JPEG or PNG format",
-      },
-    )
-    .refine((file) => file.size <= MAX_IMAGE_SIZE, {
-      message: "Image size should be less than 5 MB",
-    })
-    .nullable()
-    .optional(),
+  id: z
+    .string({ required_error: "ID is required" })
+    .min(1, "ID is required")
+    .max(80, "ID is too long")
+    .regex(/^\S*$/, { message: "ID should not contain spaces" }),
   userName: z
     .string({ required_error: "Username is required" })
     .min(1, "Username is required")

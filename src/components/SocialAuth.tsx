@@ -6,19 +6,19 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
 import { DEFAULT_AUTH_REDIRECT } from "@/lib/routes";
+import { useRouter } from "next/navigation";
 
 const SocialAuth: React.FC<{ callbackUrl?: string | undefined }> = ({
   callbackUrl,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
     try {
-      await signIn(provider, {
-        redirect: true,
-        callbackUrl: callbackUrl || DEFAULT_AUTH_REDIRECT,
-      });
+      await signIn(provider);
+      router.push(callbackUrl || DEFAULT_AUTH_REDIRECT);
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message || "Something went wrong");

@@ -16,7 +16,6 @@ import {
   type ForgetPasswordType,
 } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
-import { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,10 +34,7 @@ const ForgetPasswordForm: React.FC = () => {
   const handleSubmit = async (e: ForgetPasswordType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/account/auth/forget_password",
-        e,
-      );
+      await axiosPublic.post("/api/account/auth/forget_password", e);
 
       toast.success("Reset email was sent to your mail.");
       form.reset();

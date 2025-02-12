@@ -22,6 +22,7 @@ const Verify: React.FC<
           className="absolute inset-0 z-[0] h-full w-full object-cover brightness-[0.5]"
           src={registerImage}
           alt="banner image"
+          priority={true}
         />
         <div className="flex w-full max-w-sm flex-col gap-2 rounded-md border bg-secondary/50 p-4 text-center backdrop-blur-lg">
           <SiteLogo />

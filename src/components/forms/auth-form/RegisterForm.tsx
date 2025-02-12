@@ -22,7 +22,6 @@ import toast from "react-hot-toast";
 import errorResponse from "@/utils/client-utils/errorResponse";
 import OTPSendDialog from "@/components/auth/OTPSendDialog";
 import { axiosPublic } from "@/lib/config/axios.config";
-import type { ApiResponseType, UserType } from "@/types";
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -41,10 +40,7 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: RegisterSchemaType) => {
     try {
       setIsLoading(true);
-      await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/account/auth/register",
-        e,
-      );
+      await axiosPublic.post("/api/account/auth/register", e);
       toast.success("Registration successful");
       setOpenOTPSendDialog(true);
       setEmail(e.email);

@@ -5,6 +5,11 @@ import {
   AvatarImage,
 } from "@/components/shadcn/ui/avatar";
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/shadcn/ui/collapsible";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -21,11 +26,17 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/shadcn/ui/sidebar";
+import SiteLogo from "@/components/SiteLogo";
 import useIsMobile from "@/hooks/useMobile";
 import {
+  ChevronRight,
   ChevronsUpDown,
   CreditCard,
+  FileText,
   LayoutDashboard,
   LogOut,
   Sparkles,
@@ -47,6 +58,9 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 }) => {
   return (
     <Sidebar collapsible="icon" {...props}>
+      <div className="p-4 group-data-[collapsible=icon]:!hidden group-data-[collapsible=icon]:!p-0">
+        <SiteLogo />
+      </div>
       <SidebarContent>
         <SidebarNavLinks />
       </SidebarContent>
@@ -75,6 +89,33 @@ const SidebarNavLinks: React.FC = () => {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+        <Collapsible className="group/collapsible" asChild>
+          <SidebarMenuItem>
+            <CollapsibleTrigger asChild>
+              <SidebarMenuButton tooltip="Post">
+                <FileText />
+                <span>Post</span>
+                <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+              </SidebarMenuButton>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubItem key="Add post">
+                  <SidebarMenuSubButton asChild>
+                    <Link href="/dashboard/posts">
+                      <span>All posts</span>
+                    </Link>
+                  </SidebarMenuSubButton>
+                  <SidebarMenuSubButton asChild>
+                    <Link href="/dashboard/posts/add-post">
+                      <span>Add post</span>
+                    </Link>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </SidebarMenuItem>
+        </Collapsible>
         <SidebarMenuItem>
           <SidebarMenuButton
             isActive={pathname === "/dashboard/profile"}

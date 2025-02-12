@@ -2,14 +2,12 @@ import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import sendVerifyToken from "@/helpers/server-helper/sendVerifyToken";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
 import serverResponse from "@/helpers/server-helper/serverResponse";
-import { sendTokenSchema } from "@/lib/schemas/authSchema";
+import { sendTokenSchema, type SendTokenType } from "@/lib/schemas/authSchema";
 import { getUserByEmail } from "@/helpers/server-helper/getUser";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
-    const body = await getJsonBodyData<{
-      email: string;
-    }>(req);
+    const body = await getJsonBodyData<SendTokenType>(req);
 
     const { email } = sendTokenSchema.parse(body);
 

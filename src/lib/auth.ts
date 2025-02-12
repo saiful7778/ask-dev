@@ -1,8 +1,9 @@
-import type { AuthOptions } from "next-auth";
+import { getServerSession, type AuthOptions } from "next-auth";
 import type { JWT } from "next-auth/jwt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import db from "./db";
 import nextAuthConfig from "./config/next-auth.config";
+import generateUsername from "@/utils/server-utils/generateUsername";
 
 export const nextAuthOptions: AuthOptions = {
   ...nextAuthConfig,
@@ -13,6 +14,7 @@ export const nextAuthOptions: AuthOptions = {
         token.id = user.id.toString();
         token.role = user.role;
         token.access = user.access;
+        token.userName = user.userName;
         if (account) {
           token.authProvider = account?.provider as JWT["authProvider"];
         }
@@ -24,6 +26,7 @@ export const nextAuthOptions: AuthOptions = {
         session.user.id = token.id as JWT["id"];
         session.user.role = token.role as JWT["role"];
         session.user.access = token.access as JWT["access"];
+        session.user.userName = token.userName as JWT["userName"];
         session.user.authProvider = token.authProvider as JWT["authProvider"];
       }
 
@@ -32,11 +35,13 @@ export const nextAuthOptions: AuthOptions = {
   },
   events: {
     async createUser({ user }) {
+      const username = await generateUsername(user.name!);
       await db.user.update({
         where: {
           id: user.id,
         },
         data: {
+          username,
           emailVerified: new Date(),
         },
       });
@@ -55,3 +60,5 @@ export const nextAuthOptions: AuthOptions = {
     maxAge: 5 * 60 * 60,
   },
 };
+
+export const getAuthSession = () => getServerSession(nextAuthOptions);

@@ -1,5 +1,8 @@
 import db from "@/lib/db";
-import { registerSchema } from "@/lib/schemas/authSchema";
+import {
+  registerSchema,
+  type RegisterSchemaType,
+} from "@/lib/schemas/authSchema";
 import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import { getUserByEmail } from "@/helpers/server-helper/getUser";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
@@ -10,11 +13,7 @@ import generateUsername from "@/utils/server-utils/generateUsername";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
-    const body = await getJsonBodyData<{
-      fullName: string;
-      email: string;
-      password: string;
-    }>(req);
+    const body = await getJsonBodyData<RegisterSchemaType>(req);
 
     const { email, fullName, password } = registerSchema.parse(body);
 

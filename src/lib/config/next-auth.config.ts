@@ -58,6 +58,7 @@ export default {
 
           return {
             id: userData.id.toString(),
+            userName: userData.username!,
             authProvider: "Credentials",
             name: userData.name,
             image: userData.image,

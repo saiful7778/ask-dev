@@ -3,14 +3,15 @@ import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import sendEmail from "@/utils/server-utils/sendEmail";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
 import serverResponse from "@/helpers/server-helper/serverResponse";
-import { forgetPasswordSchema } from "@/lib/schemas/authSchema";
+import {
+  forgetPasswordSchema,
+  type ForgetPasswordType,
+} from "@/lib/schemas/authSchema";
 import { getUserByEmail } from "@/helpers/server-helper/getUser";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
-    const body = await getJsonBodyData<{
-      email: string;
-    }>(req);
+    const body = await getJsonBodyData<ForgetPasswordType>(req);
 
     const { email } = forgetPasswordSchema.parse(body);
 

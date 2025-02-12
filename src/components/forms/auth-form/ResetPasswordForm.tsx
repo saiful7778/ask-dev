@@ -16,7 +16,6 @@ import {
   type ResetPasswordType,
 } from "@/lib/schemas/authSchema";
 import errorResponse from "@/utils/client-utils/errorResponse";
-import { ApiResponseType, UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -42,10 +41,7 @@ const ResetPasswordForm: React.FC<{ token: string }> = ({ token }) => {
       if (!token) {
         return toast.error("Token is required");
       }
-      await axiosPublic.post<ApiResponseType<UserType>>(
-        "/api/account/auth/reset_password",
-        e,
-      );
+      await axiosPublic.post("/api/account/auth/reset_password", e);
 
       toast.success("Password updated successfully");
       form.reset();

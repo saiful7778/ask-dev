@@ -3,18 +3,17 @@ import db from "@/lib/db";
 import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
 import serverResponse from "@/helpers/server-helper/serverResponse";
-import { resetPasswordSchema } from "@/lib/schemas/authSchema";
+import {
+  resetPasswordSchema,
+  type ResetPasswordType,
+} from "@/lib/schemas/authSchema";
 import { getUserById } from "@/helpers/server-helper/getUser";
 import { verifyToken } from "@/utils/server-utils/manageToken";
 import { hash, genSalt } from "bcrypt";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
-    const body = await getJsonBodyData<{
-      token: string;
-      newPassword: string;
-      confirmPassword: string;
-    }>(req);
+    const body = await getJsonBodyData<ResetPasswordType>(req);
 
     const { token, newPassword } = resetPasswordSchema.parse(body);
 

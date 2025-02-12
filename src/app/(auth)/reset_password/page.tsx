@@ -21,6 +21,7 @@ const ResetPassword: React.FC<
           className="absolute inset-0 -z-[1] h-full w-full object-cover brightness-[0.5]"
           src={registerImage}
           alt="banner image"
+          priority={true}
         />
         <div className="flex w-full max-w-sm flex-col gap-2 rounded-md border bg-secondary p-4">
           <SiteLogo />

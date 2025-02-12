@@ -57,3 +57,5 @@ export type RegisterSchemaType = z.infer<typeof registerSchema>;
 export type LoginSchemaType = z.infer<typeof loginSchema>;
 export type ForgetPasswordType = z.infer<typeof forgetPasswordSchema>;
 export type ResetPasswordType = z.infer<typeof resetPasswordSchema>;
+export type SendTokenType = z.infer<typeof sendTokenSchema>;
+export type TokenSchemaType = z.infer<typeof tokenSchema>;

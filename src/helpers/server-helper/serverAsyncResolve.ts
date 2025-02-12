@@ -37,6 +37,12 @@ export default async function serverAsyncResolve<T>(
             error: err.message,
             status: 401,
           });
+        case "unauthorized":
+          return serverResponse({
+            success: false,
+            error: err.message,
+            status: 401,
+          });
 
         default:
           return serverResponse({

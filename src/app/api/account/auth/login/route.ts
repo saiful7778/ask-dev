@@ -1,16 +1,13 @@
 import { getJsonBodyData } from "@/helpers/server-helper/getBodyData";
 import serverAsyncResolve from "@/helpers/server-helper/serverAsyncResolve";
 import serverResponse from "@/helpers/server-helper/serverResponse";
-import { loginSchema } from "@/lib/schemas/authSchema";
+import { loginSchema, type LoginSchemaType } from "@/lib/schemas/authSchema";
 import { getUserByEmail } from "@/helpers/server-helper/getUser";
 import { compare } from "bcrypt";
 
 export async function POST(req: Request) {
   return serverAsyncResolve(async () => {
-    const body = await getJsonBodyData<{
-      email: string;
-      password: string;
-    }>(req);
+    const body = await getJsonBodyData<LoginSchemaType>(req);
 
     const { email, password } = loginSchema.parse(body);
 

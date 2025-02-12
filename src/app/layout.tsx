@@ -20,7 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} antialiased`}>
+      <body
+        className={`${inter.className} antialiased`}
+        data-new-gr-c-s-check-loaded="14.1218.0"
+        data-gr-ext-installed=""
+        data-gr-ext-disabled="forever"
+        cz-shortcut-listen="true"
+      >
         <Provider>{children}</Provider>
       </body>
     </html>

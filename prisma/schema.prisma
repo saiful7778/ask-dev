@@ -12,7 +12,7 @@ model User {
   id                String              @id @default(uuid())
   name              String
   role              ROLE                @default(user)
-  username          String              @unique
+  username          String?             @unique
   email             String              @unique
   emailVerified     DateTime?
   access            Boolean             @default(true)
@@ -21,7 +21,10 @@ model User {
   accounts          Account[]
   sessions          Session[]
   authenticator     Authenticator[]
-  VerificationToken VerificationToken[]
+  verificationToken VerificationToken[]
+  post              Post[]
+  vote              Vote[]
+  comment           Comment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,4 +91,66 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, credentialID])
+}
+
+model Post {
+  id            String    @id @default(uuid())
+  title         String
+  tags          Tag[]     @relation("PostTags")
+  slug          String    @unique
+  description   String
+  viewCount     Int       @default(0)
+  commentCount  Int       @default(0)
+  upVoteCount   Int       @default(0)
+  downVoteCount Int       @default(0)
+  author        User      @relation(fields: [authorId], references: [id])
+  authorId      String
+  votes         Vote[]    @relation("PostVotes")
+  comments      Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  posts     Post[]   @relation("PostTags")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vote {
+  id        String      @id @default(uuid())
+  authorId  String
+  author    User        @relation(fields: [authorId], references: [id])
+  postId    String?
+  post      Post?       @relation("PostVotes", fields: [postId], references: [id])
+  commentId String?
+  comment   Comment?    @relation("CommentVotes", fields: [commentId], references: [id])
+  status    VOTE_STATUS
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+enum VOTE_STATUS {
+  upVote
+  downVote
+}
+
+model Comment {
+  id              String    @id @default(uuid())
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  postId          String
+  post            Post      @relation(fields: [postId], references: [id])
+  upVoteCount     Int       @default(0)
+  downVoteCount   Int       @default(0)
+  votes           Vote[]    @relation("CommentVotes")
+  replies         Comment[] @relation("CommentReplies")
+  parentComment   Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id])
+  parentCommentId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
